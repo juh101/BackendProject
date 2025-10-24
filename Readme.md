@@ -41,3 +41,23 @@ A pre hook is a middleware function that runs before a certain action happens on
 - Frontend uses access token for API calls.
 - When access token expires → frontend silently calls /refresh with the refresh token.
 - Backend verifies refresh token → issues a new access token.
+
+## Cloudinary && Multer for image upload
+#### Step 1: Handling the file upload from the user (Multer)
+- Multer is a middleware that lets your Express backend receive files from the frontend.
+- It temporarily stores the uploaded file on your server and makes it available as req.file.
+- Example:
+``` javascript
+import multer from "multer";
+const upload = multer({ dest: "uploads/" }); // temporary storage
+```
+- After this step, you have the file locally on your server, ready to send to Cloudinary.
+
+#### Step 2: Storing the file in the cloud (Cloudinary)
+- Cloudinary stores your image permanently in the cloud and gives you a URL to access it.
+- You pass the file path from Multer (req.file.path) to Cloudinary:
+``` javascript
+const result = await cloudinary.uploader.upload(req.file.path, { folder: "coverImages" });
+```
+- result.secure_url → URL to store in your database for linking to the user.
+- Optionally, delete the temporary local file after upload.
