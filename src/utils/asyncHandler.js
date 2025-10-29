@@ -1,12 +1,10 @@
-const asyncHandler = (requestHandler) => 
-    (req, res, next) => {
-    Promise
-    .resolve(requestHandler(req, res, next))
-    .catch((err) => next(err));
+const asyncHandler = (requestHandler) => {
+  return (req, res, next) => {
+    Promise.resolve(requestHandler(req, res, next)).catch((err) => next(err));
   };
+};
 
-
-export default asyncHandler;
+export { asyncHandler };
 
 /*
 Example use:
@@ -21,9 +19,6 @@ Express calls returned handler function with (req, res, next).
 If your function succeeds → res.json(user) runs → response is sent.
 If your function fails (throws error / rejected promise) → the wrapper catches it and passes it to next(err).
 */
-
-
-
 
 // const asyncHandler = (fn) => {
 //   return async (req, res, next) => {
