@@ -70,3 +70,8 @@ Route handler runs → processes file and sends response.
 - Second part (app.post(...)) → handles the upload request, using Multer to process the file before your code runs.
 - once you use Multer with diskStorage, Multer automatically saves the file to the folder you specified.
 - **The local path is available in the req.file.path property inside your route handler.**
+
+## uploading on multer
+- upload.single("photo") → upload one file from field photo
+- upload.array("images") → upload many files but from the same field
+- upload.fields([...]) → upload multiple files from multiple different fields
